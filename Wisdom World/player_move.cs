@@ -4,13 +4,22 @@ using System.Collections;
 
 public class player_move : MonoBehaviour
 {
-    //変数宣言
-    [SerializeField] private Transform OVRCameraRig = null;
-    [SerializeField] private GameObject red_window = null;
+        [SerializeField] private Transform  OVRCameraRig = null;
+    [SerializeField] private GameObject red_window   = null;
 
     //佐藤
     [SerializeField] private GameObject player;
+    private float pos_x;
+    private float pos_y;
+    private float pos_z;
 
+    private int         red_window_time;
+    private int         start_state;
+    private float       time;
+    private float       speed_x;
+    private float       speed_y;
+    private float       inertia_speed_time;
+    private Rigidbody   rigidbody;
     public float        inertia_x;
     public float        inertia_y;
     public float        acceleration_z;
@@ -24,21 +33,8 @@ public class player_move : MonoBehaviour
     public float        inertia_speed_min_x;
     public float        inertia_speed_max_y;
     public float        inertia_speed_min_y;
-    private float       time;
-    static public int   move_state;
-    private int         red_window_time;
-    private float       speed_x;
-    private float       speed_y;
-    private float       inertia_speed_time;
+    public static int   move_state;
     public static float speed_z;
-    private int         start_state;
-
-    //佐藤
-    private float pos_x;
-    private float pos_y;
-    private float pos_z;
-
-    private Rigidbody rigidbody;
 
     // Start is called before the first frame update
     void Start()
