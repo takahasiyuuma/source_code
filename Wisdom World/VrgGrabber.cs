@@ -34,12 +34,12 @@ public class VrgGrabber : MonoBehaviour
     public float effect_instantiate_time;  //star系は6.5f Erekiball,Sparkは2.5f
     public float effect2_instantiate_time; //star系は6.5f Erekiball,Sparkは2.5f
 
-    public GameObject            effectPrefab;
-    public GameObject            effectPrefab2;
     [SerializeField] private     GameObject effect;
     [SerializeField] private     GameObject effect2;
     private List<ParticleSystem> _particleSystems;
     private List<ParticleSystem> _particleSystems2;
+    public GameObject            effectPrefab;
+    public GameObject            effectPrefab2;
     //ここまで
 
     public bool isLeft
