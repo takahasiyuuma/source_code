@@ -54,7 +54,7 @@ private:
 public:
 	static int hard;
 private:
-	// •Ï”éŒ¾
+	//変数宣言
 	SPRITE       title;
 	SPRITE       memo;
 	SPRITE       bat;
@@ -79,4 +79,6 @@ private:
 	int   scene;
 	int   hit;
 	int   se_flg;
+	
+	//関数宣言
 };
