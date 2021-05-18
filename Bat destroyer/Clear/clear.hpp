@@ -53,15 +53,15 @@ private:
 	void Finalize();
 
 private:
-	// •Ï”éŒ¾
-	SPRITE        player;
-	SPRITE        clear_;
-	SPRITE        a;
-	SPRITE        b;
-	SPRITE        ta_score;
-	SPRITE        bg;
-	SPRITE        figure;
-	SpriteElement c;
+	//変数宣言
+	SPRITE         player;
+	SPRITE         clear_;
+	SPRITE         a;
+	SPRITE         b;
+	SPRITE         ta_score;
+	SPRITE         bg;
+	SPRITE         figure;
+	SpriteElement  c;
 	//RENDERTARGET font;
 
 	float a_roll;
