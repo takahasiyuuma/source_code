@@ -60,9 +60,9 @@ public:
 	static int good_;
 	static int miss_;
 private:
-	// •Ï”éŒ¾
+	// å¤‰æ•°å®£è¨€
 	enum {
-		//oŒ»‚·‚é•¨(ƒIƒuƒWƒFƒNƒg)‚ÌÅ‘å”
+		//å‡ºç¾ã™ã‚‹ç‰©(ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ)ã®æœ€å¤§æ•°
 		object_max = 100,
 	};
 
@@ -130,52 +130,10 @@ private:
 	KeyboardBuffer key_buf;
 
 	// iwai
-	SPRITE player;
-	SPRITE player_swing;
-	SPRITE player_empty_swing;
-	SPRITE map;
-	SPRITE perfect;
-	SPRITE good;
-	SPRITE miss;
-	SPRITE life;
-	SPRITE Tv;
-	SPRITE good_point;
-	SPRITE perfect_point;
-	SPRITE circle;
-	SPRITE hit_point;
-	SPRITE ready;
-	SPRITE go;
-	SPRITE hit;
-	SOUND  good_se;
-	SOUND  perfect_se;
-	SOUND  miss_se;
-	FONT   txt;
+	
+	//ãƒãƒ¼ãƒ ã®æ–¹ãŒä½œæˆã—ãŸã¨ã“ã‚ãªã®ã§çœç•¥
 
-	int    hit_test;
-	int    swing_flg;
-	int    count;
-	int    hitcount[object_max];
-	int    combo;
-	float  range;
-	float  life_y;
-	float  clip_x;
-	float  good_x, good_y;
-	float  perfect_x, perfect_y;
-	float  Tv_alpha;
-	float  big[object_max];
-	float  circle_alpha[object_max];
-	float  hard_speed;
-	float  big_‚R‚„;
-	float  big_go;
-	float  alpha_go;
-	float  miss_x, miss_y;
-	float  camera_aplha[object_max];
-	float  tv_aplha[object_max];
-	float  microwave_aplha[object_max];
-	float  player_x, player_y;
-	float  Tv_x, Tv_y;
-
-	// ŠÖ”éŒ¾
+	// é–¢æ•°å®£è¨€
 	void takahasi_Initialize();
 	void takahasi_Main();
 	void takahasi_Draw();
@@ -184,7 +142,7 @@ private:
 	void iwai_Update();
 	void iwai_Draw();
 
-	void ‚R‚„_Initialize();
-	void ‚R‚„_Update();
-	void ‚R‚„_Draw();
+	void ï¼“ï½„_Initialize();
+	void ï¼“ï½„_Update();
+	void ï¼“ï½„_Draw();
 };
