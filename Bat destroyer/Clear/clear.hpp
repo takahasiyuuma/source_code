@@ -53,7 +53,7 @@ private:
 	void Finalize();
 
 private:
-	// �ϐ��錾
+	// •Ï”éŒ¾
 	SPRITE        player;
 	SPRITE        clear_;
 	SPRITE        a;
@@ -89,6 +89,4 @@ private:
 	SOUND small_se;
 	SOUND tin_se;
 	SOUND perfect_se;
-
-	// �֐�
 };
