@@ -2,10 +2,11 @@
 #include "StdAfx.h"
 #include "GameMain.h"
 
-int GameMain::score = 0;
+//clear.cpp‚Åæ“¾‚Å‚«‚é‚æ‚¤‚É
+int GameMain::score    = 0;
 int GameMain::perfect_ = 0;
-int GameMain::good_ = 0;
-int GameMain::miss_ = 0;
+int GameMain::good_    = 0;
+int GameMain::miss_    = 0;
 
 #include <fstream>
 
@@ -17,11 +18,13 @@ int GameMain::miss_ = 0;
 bool GameMain::Initialize()
 {
 	DefaultFont = GraphicsDevice.CreateDefaultFont();
-
 	GraphicsDevice.SetRenderState(NormalizeNormals_Enable);
+	//GraphicsDevice.SetRenderState(Specular_Enable);
+	//GraphicsDevice.SetRenderState(CullMode_None);
+
 	takahasi_Initialize();
 	iwai_Initialize();
-	ï¼“ï½„_Initialize();
+	‚R‚„_Initialize();
 
 	return true;
 }
@@ -39,10 +42,21 @@ int GameMain::Update()
 {
 	takahasi_Main();
 	iwai_Update();
-	ï¼“ï½„_Update();
+	‚R‚„_Update();
+
+	//“–‚½‚è”»’è“¯m‚Ì‹——£‚ğ‘ª‚Á‚Ä”»’è
+	if (start_state == 5)
+	{
+		return GAME_SCENE(new clearScene);
+	}
+
+	//ŒŸØ—p
+	//if (key_buf.IsPressed(Keys_A))
+	//{
+	//	return GAME_SCENE(new clearScene);
+	//}
 
 	return 0;
-
 }
 void GameMain::Draw()
 {
@@ -51,7 +65,7 @@ void GameMain::Draw()
 
 	GraphicsDevice.BeginScene();
 
-	ï¼“ï½„_Draw();
+	‚R‚„_Draw();
 
 	SpriteBatch.Begin();
 
@@ -61,9 +75,45 @@ void GameMain::Draw()
 	SpriteBatch.End();
 
 	GraphicsDevice.EndScene();
+
+	//“–‚½‚è”»’è‚ÌƒfƒoƒbƒN—p
+	Canvas canvas = GraphicsDevice.LockCanvas();
+	Paint  paint;
+
+	//paint.SetPaintColor(Color_Blue);
+	//canvas.DrawRect(miss_collision, paint);
+	//paint.SetPaintColor(Color_Red);
+	//canvas.DrawRect(good_collision, paint);
+	//paint.SetPaintColor(Color_Green);
+	//canvas.DrawRect(perfect_collision, paint);
+	//paint.SetPaintColor(Color_Blue);
+	//canvas.DrawRect(Tv_collision, paint);
+	//paint.SetPaintColor(Color_Blue);
+	//canvas.DrawRect(“–‚½‚è”»’è_collision, paint);
+	//paint.SetPaintColor(Color_Blue);
+	//canvas.DrawRect(‹‘åƒeƒŒƒr_collision, paint);
+	for (int i = 0; i < object_max; i++) {
+
+		//paint.SetPaintColor(Color_Blue);
+		//canvas.DrawRect(ƒKƒXŠÊ_collision[i], paint);
+		if (object_state[i] == 1) {
+		//	paint.SetPaintColor(Color_Red);
+		//	canvas.DrawRect(ƒeƒŒƒr_collision[i], paint);
+		}
+		else if (object_state[i] == 2) {
+		//	paint.SetPaintColor(Color_Red);
+		//	canvas.DrawRect(ƒJƒƒ‰_collision[i], paint);
+		}
+		else if (object_state[i] == 3) {
+		//	paint.SetPaintColor(Color_Red);
+		//	canvas.DrawRect(“dqƒŒƒ“ƒW_collision[i], paint);
+		}
+	}
+	GraphicsDevice.UnlockCanvas();
+	//‚±‚±‚Ü‚Å
 }
 void GameMain::iwai_Initialize() {
-	player = GraphicsDevice.CreateSpriteFromFile(_T("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚­ãƒ£ãƒ©_20.png"));
+	player = GraphicsDevice.CreateSpriteFromFile(_T("ƒvƒŒƒCƒ„[ƒLƒƒƒ‰_20.png"));
 	player_swing = GraphicsDevice.CreateSpriteFromFile(_T("player2.png"));
 	map = GraphicsDevice.CreateSpriteFromFile(_T("map.png"));
 	perfect = GraphicsDevice.CreateSpriteFromFile(_T("perfect.png"));
@@ -71,11 +121,13 @@ void GameMain::iwai_Initialize() {
 	miss = GraphicsDevice.CreateSpriteFromFile(_T("miss.png"));
 	life = GraphicsDevice.CreateSpriteFromFile(_T("life.png"));
 	Tv = GraphicsDevice.CreateSpriteFromFile(_T("Tv.png"));
+//	good_point = GraphicsDevice.CreateSpriteFromFile(_T("good_point.png"));
+//	perfect_point = GraphicsDevice.CreateSpriteFromFile(_T("Perfect_point.png"));
 	circle = GraphicsDevice.CreateSpriteFromFile(_T("circle.png"));
 	hit_point = GraphicsDevice.CreateSpriteFromFile(_T("hit_point.png"));
 	good_se = SoundDevice.CreateSoundFromFile(_T("good.wav"));
 	perfect_se = SoundDevice.CreateSoundFromFile(_T("perfect.wav"));
-	miss_se = SoundDevice.CreateSoundFromFile(_T("ç©ºæŒ¯ã‚Š.wav"));
+	miss_se = SoundDevice.CreateSoundFromFile(_T("‹óU‚è.wav"));
 	ready = GraphicsDevice.CreateSpriteFromFile(_T("ready.png"));
 	go = GraphicsDevice.CreateSpriteFromFile(_T("go.png"));
 	txt = GraphicsDevice.CreateSpriteFont(_T("ContinueAL"), 50);
@@ -114,9 +166,15 @@ void GameMain::iwai_Initialize() {
 }
 void GameMain::iwai_Draw() {
 	// TODO: Add your drawing code here
+	//GraphicsDevice.Clear(Color_CornflowerBlue);
 
+	//GraphicsDevice.BeginScene();
+	
+	//SpriteBatch.Begin();
 	SpriteBatch.Draw(*map, Vector3(0, 0, 0));
 	SpriteBatch.Draw(*Tv, Vector3(Tv_x, Tv_y, 0), Tv_alpha);
+//	SpriteBatch.Draw(*good_point, Vector3(good_x, good_y, 0));
+//	SpriteBatch.Draw(*perfect_point, Vector3(perfect_x, perfect_y, 0));
 	SpriteBatch.Draw(*hit_point, Vector3(300, 400, -100));
 	for (int i = 0; i < object_max; i++)
 	{
@@ -126,11 +184,11 @@ void GameMain::iwai_Draw() {
 	if (hit_test == 1)SpriteBatch.Draw(*perfect, Vector3(300, 400, 0));
 	if (hit_test == 2)SpriteBatch.Draw(*good, Vector3(280, 400, 0));
 	if (hit_test == 3)SpriteBatch.Draw(*miss, Vector3(280, 400, 0));
-	SpriteBatch.DrawString(DefaultFont, Vector2(350, 0), Color(0, 0, 0), _T("è·é›¢:%f"), range);
-	SpriteBatch.DrawString(DefaultFont, Vector2(350, 20), Color(0, 0, 0), _T("ã‚¿ã‚¤ãƒ :%d"), second_1);
-	SpriteBatch.DrawString(DefaultFont, Vector2(350, 40), Color(0, 0, 0), _T("ã‚¹ã‚³ã‚¢:%d"), score);
-	SpriteBatch.DrawString(DefaultFont, Vector2(350, 60), Color(0, 0, 0), _T("ç ´å£Š:%f"), explosion->GetTrackPosition(0));
-	if(combo >= 2)SpriteBatch.DrawString(txt, Vector2(0, 40), Color(255, 162,235), _T("%dã‚³ãƒ³ãƒœ"), combo);
+	SpriteBatch.DrawString(DefaultFont, Vector2(350, 0), Color(0, 0, 0), _T("‹——£:%f"), range);
+	SpriteBatch.DrawString(DefaultFont, Vector2(350, 20), Color(0, 0, 0), _T("ƒ^ƒCƒ€:%d"), second_1);
+	SpriteBatch.DrawString(DefaultFont, Vector2(350, 40), Color(0, 0, 0), _T("ƒXƒRƒA:%d"), score);
+	SpriteBatch.DrawString(DefaultFont, Vector2(350, 60), Color(0, 0, 0), _T("”j‰ó:%f"), explosion->GetTrackPosition(0));
+	if(combo >= 2)SpriteBatch.DrawString(txt, Vector2(0, 40), Color(255, 162,235), _T("%dƒRƒ“ƒ{"), combo);
 	if(count >1430)SpriteBatch.Draw(*ready, Vector3(400, 160, 0));
 	if(count <=1430 && count >= 1320)SpriteBatch.Draw(*go, Vector3(430,160, 0),alpha_go, Vector3(0, 0,0), Vector3(122, 112, 0), Vector2(big_go, big_go));
 }
@@ -200,6 +258,12 @@ void GameMain::iwai_Update() {
 			}
 		}
 
+	//if (keyboard.IsKeyUp(Keys_Space) && swing_flg == true)
+	//{
+	//	clip_x = 0;
+	//	hit_test = 0;
+	//	swing_flg = false;
+	//}
 	range = Tv_x - player_x;
 	if (swing_flg == true)
 	{
@@ -230,82 +294,82 @@ void GameMain::iwai_Update() {
 }
 void GameMain::takahasi_Initialize() {
 
-	bg = GraphicsDevice.CreateSpriteFromFile(_T("èƒŒæ™¯.png"));
 	iwai_Initialize();
 
-	bg = GraphicsDevice.CreateSpriteFromFile(_T("èƒŒæ™¯.png"));
-	ta_player = GraphicsDevice.CreateSpriteFromFile(_T("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼.png"));
-	tv = GraphicsDevice.CreateSpriteFromFile(_T("ãƒ†ãƒ¬ãƒ“.png"));
-	ta_camera = GraphicsDevice.CreateSpriteFromFile(_T("ã‚«ãƒ¡ãƒ©.png"));
-	microwave = GraphicsDevice.CreateSpriteFromFile(_T("é›»å­ãƒ¬ãƒ³ã‚¸.png"));
-	hit = GraphicsDevice.CreateSpriteFromFile(_T("å½“ãŸã‚Šåˆ¤å®š.png"));
-	font = GraphicsDevice.CreateSpriteFont(_T("MSã‚´ã‚·ãƒƒã‚¯"), 50);
-	big_tv = GraphicsDevice.CreateSpriteFromFile(_T("å·¨å¤§ãƒ†ãƒ¬ãƒ“.png"));
-	gas = GraphicsDevice.CreateSpriteFromFile(_T("ã‚¬ã‚¹ç¼¶.png"));
+	bg        = GraphicsDevice.CreateSpriteFromFile(_T("”wŒi.png"));
+	ta_player = GraphicsDevice.CreateSpriteFromFile(_T("ƒvƒŒƒCƒ„[.png"));
+	tv        = GraphicsDevice.CreateSpriteFromFile(_T("ƒeƒŒƒr.png"));
+	ta_camera = GraphicsDevice.CreateSpriteFromFile(_T("ƒJƒƒ‰.png"));
+	microwave = GraphicsDevice.CreateSpriteFromFile(_T("“dqƒŒƒ“ƒW.png"));
+	hit       = GraphicsDevice.CreateSpriteFromFile(_T("“–‚½‚è”»’è.png"));
+	font      = GraphicsDevice.CreateSpriteFont    (_T("MSƒSƒVƒbƒN"), 50);
+	car    = GraphicsDevice.CreateSpriteFromFile(_T("‹‘åƒeƒŒƒr.png"));
+	gas       = GraphicsDevice.CreateSpriteFromFile(_T("ƒKƒXŠÊ.png"));
+	movie     = MediaManager.  CreateMediaFromFile (_T("ƒƒ{ƒbƒgHê.mp3")); //BGM
 
 	MediaManager.Attach(GraphicsDevice);
 
-	movie = MediaManager.CreateMediaFromFile(_T("ãƒ­ãƒœãƒƒãƒˆå·¥å ´.mp3"));
-
-	camera_speed = 15 ;
-	microwave_speed = 6 / titleScene::hard;
-	tv_speed = 10 * titleScene::hard;
-	big_tv_speed = 5 * titleScene::hard;
-	ta_time = 0;
-	second_1 = 0;
-	start_state = 0;
-	movie_time = 0;
-	debug = 0;
-	big_tv_hit = 15 * titleScene::hard;
-	big_tv_state = 0;
-	font_state = 0;
-
-	for (int i = 0; i < object_max; i++) {
-		goal[i] = 100 + (150 * i);
-		tv_x[i] = 0;
-		tv_y[i] = 400;
-		camera_x[i] = 0;
-		camera_y[i] = 400;
-		microwave_x[i] = 0;
-		microwave_y[i] = 400;
-		gas_x[i] = 0;
-		gas_y[i] = 400;
-		speed_y[i] = 7;
-		theta[i] = 0;
-		t[i] = 0;
-	}
-
-	object_state[0] = 1;
-
-	for (int i = 1; i < object_max; i++) {
-		object_state[i] = MathHelper_Random(1, 3);
-	}
+	//•Ï”‚Ì‰Šú‰»
+	camera_speed    = 15 ;
+	microwave_speed = 6  / titleScene::hard;
+	tv_speed        = 10 * titleScene::hard;
+	car_speed       = 5  * titleScene::hard;
+	ta_time         = 0;
+	second_1        = 0;
+	start_state     = 0;
+	movie_time      = 0;
+	debug           = 0;
+	car_hit         = 15 * titleScene::hard;
+	car_state       = 0;
+	font_state      = 0;
 
 	ta_player_x = 100;
 	ta_player_y = 400;
-	hit_x = 200;
-	hit_y = 500;
-	big_tv_x = 1000;
-	big_tv_y = 200;
-	point[0] = Vector3(1280, 400, 0);
-	point[1] = Vector3(800, 300, 0);
-	point[2] = Vector3(700, 300, 0);
-	point[3] = Vector3(500, 400, 0);
+	hit_x       = 200;
+	hit_y       = 500;
+	car_x       = 1000;
+	car_y    = 200;
+	point[0]    = Vector3(1280, 400, 0);
+	point[1]    = Vector3(800, 300, 0);
+	point[2]    = Vector3(700, 300, 0);
+	point[3]    = Vector3(500, 400, 0);
+
+	//•Ï”(”z—ñ)‚Ì‰Šú‰»
+	for (int i = 0; i < object_max; i++) {
+		goal[i]        = 100 + (150 * i);
+		tv_x[i]        = 0;
+		tv_y[i]        = 400;
+		camera_x[i]    = 0;
+		camera_y[i]    = 400;
+		microwave_x[i] = 0;
+		microwave_y[i] = 400;
+		gas_x[i]       = 0;
+		gas_y[i]       = 400;
+		speed_y[i]     = 7;
+		theta[i]       = 0;
+		t[i]           = 0;
+	}
+
+	//Å‰‚Éo‚Ä‚­‚é•¨‚ğİ’è
+	object_state[0] = 1;
+
+	//oŒ»‚·‚é•¨‚ğƒ‰ƒ“ƒ_ƒ€‚Åİ’è
+	for (int i = 1; i < object_max; i++) {
+		object_state[i] = MathHelper_Random(1, 3);
+	}
 }
 
 void GameMain::takahasi_Main() {
 
-	keyboard = Keyboard->GetState();
-	key_buf = Keyboard->GetBuffer();
-	// TODO: Add your update logic here
-
+	keyboard   = Keyboard->GetState();
+	key_buf    = Keyboard->GetBuffer();
 	movie_time = movie->GetPosition() / 100000;
 
+	//ƒ^ƒCƒ€‚Ìˆ—Astart_state•ÏX
 	ta_time += 1;
-
 	if (ta_time == 60) {
 		second_1 += 1;
-		ta_time = 0;
+		ta_time   = 0;
 	}
 
 	if (second_1 == 3) {
@@ -313,7 +377,7 @@ void GameMain::takahasi_Main() {
 	}
 	else if (second_1 == 45) {
 		start_state = 2;
-		font_state = 1;
+		font_state  = 1;
 	}
 	else if (second_1 == 53) {
 		movie->Stop();
@@ -329,225 +393,233 @@ void GameMain::takahasi_Main() {
 
 		movie->Play();
 
+		//“–‚½‚è”»’è
 		for (int i = 0; i < object_max; i++) {
 
 			hit_collision = Rect(hit_x, hit_y, hit_x + 150, hit_y + 90);
 
 			if (object_state[i] == 1) {
-				tv_x[i] = ta_player_x + (goal[i] - movie_time) * tv_speed;
+				//ƒeƒŒƒr
+				tv_x[i]         = ta_player_x + (goal[i] - movie_time) * tv_speed;
 				tv_collision[i] = Rect(tv_x[i], tv_y[i], tv_x[i] + 100, tv_y[i] + 250);
+
 				if (tv_x[i] < 1280)
 				{
-					big[i] -= 0.0138;
+					big[i]         -= 0.0138;
 					circle_alpha[i] = 0.5;
 				}
 			}
 			else if (object_state[i] == 2) {
-				camera_x[i] = ta_player_x + (goal[i] - movie_time) * camera_speed;
+				//ƒJƒƒ‰
+				camera_x[i]         = ta_player_x + (goal[i] - movie_time) * camera_speed;
 				camera_collision[i] = Rect(camera_x[i], camera_y[i], camera_x[i] + 100, camera_y[i] + 70);
 
 				if (camera_x[i] < 1280) {
-					Vector3 bezier = Vector3_Bezier(point[0], point[1], point[2], point[3], t[i]);
-					camera_x[i] = bezier.x;
-					camera_y[i] = bezier.y;
-					t[i] = t[i] + 0.02f * titleScene::hard;
+					//ƒxƒWƒF‹Èü
+					Vector3 bezier      = Vector3_Bezier(point[0], point[1], point[2], point[3], t[i]);
+					camera_x[i]         = bezier.x;
+					camera_y[i]         = bezier.y;
+					t[i]                = t[i] + 0.02f * titleScene::hard;
 					camera_collision[i] = Rect(bezier.x, bezier.y, bezier.x + 60, bezier.y + 64);
-					big[i] -= 0.013;
-					circle_alpha[i] = 0.5;
+					big[i]             -= 0.013;
+					circle_alpha[i]     = 0.5;
 				}
 			}
 			else if (object_state[i] == 3) {
-				microwave_x[i] = ta_player_x + (goal[i] - movie_time) * microwave_speed;
+				//“dqƒŒƒ“ƒW
+				microwave_x[i]         = ta_player_x + (goal[i] - movie_time) * microwave_speed;
 				microwave_collision[i] = Rect(microwave_x[i] - 3, microwave_y[i], microwave_x[i] + 100, microwave_y[i] + 150);
 
 				if (microwave_x[i] < 1280) {
-						big[i] -= 0.0085;
-						circle_alpha[i] = 0.5;
-					microwave_x[i] = microwave_x[i] - 2;
-					////                        å‹•ã‹ã—ãŸã„ãƒ‰ãƒƒãƒˆæ•°â†“ã€€ã€€                    â†“æœ€åˆã®æç”»ä½ç½®ã€€ 
-					microwave_y[i] = MathHelper_Sin(theta[i]) * 90 * titleScene::hard + 400;
-					theta[i] = theta[i] + 1;
+					big[i]         -= 0.0085;
+					circle_alpha[i] = 0.5;
+					microwave_x[i]  = microwave_x[i] - 2; //     “®‚©‚µ‚½‚¢ƒhƒbƒg”«@@«Å‰‚Ì•`‰æˆÊ’u@ 
+					microwave_y[i]  = MathHelper_Sin(theta[i]) * 90 * titleScene::hard + 400;
+					theta[i]        = theta[i] + 1;
 				}
 			}
 			else if (object_state[i] == 4) {
-				gas_x[i] = ta_player_x + (goal[i] - movie_time) * microwave_speed;
-				gas_collision[i] = Rect(gas_x[i], gas_y[i], gas_x[i] + 75, gas_y[i] + 150);
-				if (gas_x[i] < 1280)
-				{
-					big[i] -= 0.0138;
-					circle_alpha[i] = 0.5;
-				}
+				//ƒKƒXŠÊ
+				//gas_x[i]         = ta_player_x + (goal[i] - movie_time) * microwave_speed;
+				//gas_collision[i] = Rect(gas_x[i], gas_y[i], gas_x[i] + 75, gas_y[i] + 150);
+				//if (gas_x[i] < 1280)
+				//{
+				//	big[i]         -= 0.0138;
+				//	circle_alpha[i] = 0.5;
+				//}
 			}
+
 
 			if (start_state == 1) {
 
 				if (tv_x[i] < -400) {
 					object_state[i] = 0;
-					speed_y[i] = 0;
+					speed_y[i]      = 0;
 				}
 
 				if (camera_x[i] < -400) {
 					object_state[i] = 0;
-					speed_y[i] = 0;
+					speed_y[i]      = 0;
 				}
 
 				if (camera_y[i] > 1000) {
 					object_state[i] = 0;
-					speed_y[i] = 0;
+					speed_y[i]      = 0;
 				}
 
 				if (microwave_x[i] < -400) {
 					object_state[i] = 0;
-					speed_y[i] = 0;
+					speed_y[i]      = 0;
 				}
 
 				if (gas_x[i] < -400) {
 					object_state[i] = 0;
-					speed_y[i] = 0;
+					speed_y[i]      = 0;
 				}
 			}
 			else if (start_state == 2) {
 
 				if (tv_x[i] < -500) {
 					object_state[i] = 0;
-					start_state = 3;
+					start_state     = 3;
 				}
 
 				if (camera_x[i] < -500) {
 					object_state[i] = 0;
-					start_state = 3;
+					start_state     = 3;
 				}
 
 				if (camera_y[i] < 900) {
 					object_state[i] = 0;
-					speed_y[i] = 0;
-					start_state = 3;
+					speed_y[i]      = 0;
+					start_state     = 3;
 				}
 
 				if (microwave_x[i] < -500) {
 					object_state[i] = 0;
-					start_state = 3;
+					start_state     = 3;
 				}
 
 				if (gas_x[i] < -500) {
 					object_state[i] = 0;
-					start_state = 3;
+					start_state     = 3;
 				}
 			}
 		}
 	}
 	else if (start_state == 3) {
-		big_tv_collision = Rect(big_tv_x, big_tv_y, big_tv_x + 150, big_tv_y + 500);
-		big_tv_x = big_tv_x - big_tv_speed;
+		car_collision = Rect(car_x, car_y, car_x + 150, car_y + 500);
+		car_x         = car_x - car_speed;
 
-		if (big_tv_state == 0) {
+		if (car_state == 0) {
 
 			if (key_buf.IsPressed(Keys_Space)) {
 
-				if (perfect_collision.Intersect(big_tv_collision)){
-					big_tv_hit -= 1;
-					big_tv_x += 60;
+				if (perfect_collision.Intersect(car_collision)){
+					car_hit  -= 1;
+					car_x    += 60;
 					perfect_se->Play();
-					explosion->SetTrackPosition(0, 0);
-					explosion->SetTrackEnable(0, true);
+					explosion ->SetTrackPosition(0, 0);
+					explosion ->SetTrackEnable(0, true);
 				}
 			}
 
-			if (big_tv_hit <= 0) {
-				big_tv_state = 1;
-			}
-
-			if (big_tv_x < 100) {
-
+			if (car_hit <= 0) {
+				car_state = 1;
 			}
 		}
-		else if (big_tv_state == 1) {
+		else if (car_state == 1) {
 			explosion->SetTrackPosition(0, 0);
 			explosion->SetTrackEnable(0, true);
 		}
 	}
 }
-
 void GameMain::takahasi_Draw()
 {
+	//ƒfƒoƒbƒN—p
+	//if (debug == 1) {
+	//	SpriteBatch.DrawString(font, Vector2(1000, 50), Color(255, 255, 255), _T("“–‚½‚Á‚Ä‚é"));
+	//}
 
-	SpriteBatch.DrawString(font, Vector2(0, 0), Color(255, 255, 255), _T("%ld"), movie->GetPosition() / 100000);
-	SpriteBatch.DrawString(font, Vector2(500, 0), Color(255, 255, 255), _T("%d"), second_1);
+	SpriteBatch.DrawString(font, Vector2(0, 0),   Color(255, 255, 255), _T("%ld"), movie->GetPosition() / 100000);
+	SpriteBatch.DrawString(font, Vector2(500, 0), Color(255, 255, 255), _T("%d"),  second_1);
+	SpriteBatch.Draw      (*bg,  Vector3(0.0f, 0.0f, 10.0f));
 
 	if (start_state == 5) {
-		SpriteBatch.DrawString(font, Vector2(1000, 0), Color(255, 255, 255), _T("ã‚¯ãƒªã‚¢"));
-	}
-	SpriteBatch.Draw(*bg, Vector3(0.0f, 0.0f, 10.0f));
-
-	if (debug == 1) {
-		SpriteBatch.DrawString(font, Vector2(1000, 50), Color(255, 255, 255), _T("å½“ãŸã£ã¦ã‚‹"));
-	}
-
-	if (font_state == 1 && big_tv_state == 0) {
-		
+		SpriteBatch.DrawString(font, Vector2(1000, 0), Color(255, 255, 255), _T("ƒNƒŠƒA"));
 	}
 
 	if (start_state == 1 || start_state == 2) {
 
 		for (int i = 0; i < object_max; i++)
 		{
-
 			if (object_state[i] == 1) {
+				//ƒeƒŒƒr
 				SpriteBatch.Draw(*tv, Vector3(tv_x[i], tv_y[i], 0.0f),tv_aplha[i]);
 			}
 			else if (object_state[i] == 2) {
+				//ƒJƒƒ‰
 				SpriteBatch.Draw(*ta_camera, Vector3(camera_x[i], camera_y[i], 0.0f), camera_aplha[i]);
 			}
 			else if (object_state[i] == 3) {
+				//“dqƒŒƒ“ƒW
 				SpriteBatch.Draw(*microwave, Vector3(microwave_x[i], microwave_y[i], 0.0f));
 			}
 			else if (object_state[i] == 4) {
-				SpriteBatch.Draw(*gas, Vector3(gas_x[i], gas_y[i], 0.0f));
+				//ƒKƒXŠÊ
+				//SpriteBatch.Draw(*gas, Vector3(gas_x[i], gas_y[i], 0.0f));
 			}
 		}
 	}
-}
+	else if (start_state == 3 && car_state == 0) {
 
-void GameMain::ï¼“ï½„_Initialize()
+		SpriteBatch.DrawString(font,    Vector2(300,300),  Color(255, 255, 255), _T("8KƒeƒŒƒr‘Ì—Í:%d"),car_hit);
+		SpriteBatch.DrawString(font,    Vector2(700, 200), Color(0, 255, 255),   _T("˜A‘Å‚µ‚Ä8KƒeƒŒƒr‚ğ‰ó‚¹!!"));
+		SpriteBatch.Draw      (*car, Vector3(car_x, car_y, 10.0f));
+	}
+}
+void GameMain::‚R‚„_Initialize()
 {
+	//ƒ‰ƒCƒg
 	Light light;
-	light.Type = Light_Directional;
+	light.Type      = Light_Directional;
 	light.Direction = Vector3(0, -1, 1);
-	light.Diffuse = Color(1.0f, 1.0f, 1.0f);
-	light.Ambient = Color(1.0f, 1.0f, 1.0f);
-	light.Specular = Color(1.0f, 1.0f, 1.0f);
+	light.Diffuse   = Color(1.0f, 1.0f, 1.0f);
+	light.Ambient   = Color(1.0f, 1.0f, 1.0f);
+	light.Specular  = Color(1.0f, 1.0f, 1.0f);
 	GraphicsDevice.SetLight(light);
 
 	explosion = GraphicsDevice.CreateAnimationModelFromFile(_T("bakuha.x"), Compute_NormalTangent);
-	explosion->SetScale(30.0f, -30.0f, 1.0f);//å¤§ãã•
-	explosion->SetPosition(400, 500, -10000);
+	explosion ->SetScale(30.0f, -30.0f, 1.0f);//‘å‚«‚³
+	explosion ->SetPosition(400, 500, -10000);
 
+	//ƒ}ƒeƒŠƒAƒ‹
 	Material material;
-	material.Diffuse = Color(1.0f, 1.0f, 1.0f);
-	material.Ambient = Color(0.5f, 0.5f, 0.5f);
+	material.Diffuse  = Color(1.0f, 1.0f, 1.0f);
+	material.Ambient  = Color(0.5f, 0.5f, 0.5f);
 	material.Specular = Color(1.0f, 1.0f, 1.0f);
-	material.Power = 10.0f;
-	explosion->SetMaterial(material);
+	material.Power    = 10.0f;
 
+	explosion->SetMaterial(material);
 	explosion->SetTrackEnable(0, false);
 	explosion->SetTrackLoopMode(0, AnimationLoopMode_Once);
 
 	auto frame = explosion->GetTrackPosition(0);
 
+	//ƒJƒƒ‰
 	camera->SetView(Vector3(0, 0, -10), Vector3(0, 0, 0));
 	camera->SetOrthographicOffCenter(0, 1280, 720, 0, -10000, 10000);
-
 	GraphicsDevice.SetCamera(camera);
 }
-void GameMain::ï¼“ï½„_Update()
+void GameMain::‚R‚„_Update()
 {
 	explosion->AdvanceTime(GameTimer.GetElapsedSecond());
 	if (explosion->GetTrackPosition(0) >= 0.5)
-		{
-			explosion->SetTrackEnable(0, false);
-		}
+	{
+		explosion->SetTrackEnable(0, false);
+	}
 }
-void GameMain::ï¼“ï½„_Draw()
+void GameMain::‚R‚„_Draw()
 {
 		explosion->Draw();
 }
