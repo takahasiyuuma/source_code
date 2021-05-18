@@ -89,4 +89,6 @@ private:
 	SOUND small_se;
 	SOUND tin_se;
 	SOUND perfect_se;
+	
+	//関数宣言
 };
