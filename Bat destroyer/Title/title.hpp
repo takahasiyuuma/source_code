@@ -55,31 +55,30 @@ public:
 	static int hard;
 private:
 	// 変数宣言
-	SPRITE title;
-	SPRITE memo;
-	SOUND perfect_se;
-	SPRITE bat;
-	SPRITE nomal;
-	SPRITE hard_sp;
-	SPRITE title_title;
-	SPRITE description;
-	SPRITE description_letter;
+	SPRITE       title;
+	SPRITE       memo;
+	SPRITE       bat;
+	SPRITE       nomal;
+	SPRITE       hard_sp;
+	SPRITE       title_title;
+	SPRITE       description;
+	SPRITE       description_letter;
+	SOUND        perfect_se;
+	FONT         txt;
+	FONT         smalltxt;
+	RENDERTARGET font;
+	RENDERTARGET font2;
+
 	float bat_x, bat_y;
 	float txt_x, txt_y;
 	float txt_x2, txt_y2;
 	float scale_x, scale_y, scale_x2, scale_y2,scale_x3, scale_y3,scale_x5, scale_y5;
 	float bat_roll,roll,roll2;
-	int count;
-	int flg;
-	int scene;
-	int hit;
-	int se_flg;
-	FONT txt;
-	FONT smalltxt;
+	int   count;
+	int   flg;
+	int   scene;
+	int   hit;
+	int   se_flg;
 
-	RENDERTARGET font;
-	RENDERTARGET font2;
-
-	// 関数プロトタイプ
-
+	// 関数
 };
