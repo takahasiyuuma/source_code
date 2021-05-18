@@ -54,7 +54,7 @@ private:
 public:
 	static int hard;
 private:
-	// �ϐ��錾
+	// •Ï”éŒ¾
 	SPRITE       title;
 	SPRITE       memo;
 	SPRITE       bat;
@@ -69,16 +69,14 @@ private:
 	RENDERTARGET font;
 	RENDERTARGET font2;
 
-	float bat_x, bat_y;
-	float txt_x, txt_y;
-	float txt_x2, txt_y2;
+	float bat_x,   bat_y;
+	float txt_x,   txt_y;
+	float txt_x2,  txt_y2;
 	float scale_x, scale_y, scale_x2, scale_y2,scale_x3, scale_y3,scale_x5, scale_y5;
-	float bat_roll,roll,roll2;
+	float bat_roll,roll,    roll2;
 	int   count;
 	int   flg;
 	int   scene;
 	int   hit;
 	int   se_flg;
-
-	// �֐�
 };
