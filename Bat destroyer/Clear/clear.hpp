@@ -54,42 +54,41 @@ private:
 
 private:
 	// 変数宣言
-	SPRITE player;
-	SPRITE clear_;
-	SPRITE a;
-	SPRITE b;
+	SPRITE        player;
+	SPRITE        clear_;
+	SPRITE        a;
+	SPRITE        b;
+	SPRITE        ta_score;
+	SPRITE        bg;
+	SPRITE        figure;
 	SpriteElement c;
+	//RENDERTARGET font;
+
 	float a_roll;
 	float a_big;
 	float b_big;
 	float c_roll;
-	int count;
-	int second;
-	FONT txt;
-	FONT bigtxt;
+	float clip_x;
+	float b_big2;
+	float roll;
+	float score_x, score_y, score_x2, score_y2, score_x3, score_y3, score_x4, score_y4, score_x5, score_y5, score_x6, score_y6;
+	float speed, speed2;
+	float b_big3;
+	int   count;
+	int   second;
+	int   bat_state;
+	int   clip_x_max;
+	int   time;
+	int   time2;
+	int   figure_x;
+	int   score_state;
+	int   start_state;
+	FONT  txt;
+	FONT  bigtxt;
 	SOUND big_se;
 	SOUND small_se;
 	SOUND tin_se;
-
-	float clip_x;
-	int bat_state;
-	int clip_x_max;
-
-	SPRITE ta_score;
-	SPRITE bg;
 	SOUND perfect_se;
-	SPRITE figure;
-	int time;
-	int time2;
-	int figure_x;
-	float b_big2;
-	int score_state;
-	float roll;
-	float score_x, score_y,score_x2, score_y2,score_x3, score_y3, score_x4, score_y4, score_x5, score_y5,score_x6, score_y6;
-	float speed, speed2;
-	int start_state;
-	float b_big3;
 
-	// 関数プロトタイプ
-
+	// 関数
 };
